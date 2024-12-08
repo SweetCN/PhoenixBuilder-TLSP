@@ -70,9 +70,8 @@ func assertAndParse[T any](resp *http.Response) T {
 }
 
 func CreateClient(options *ClientOptions) *Client {
-	if options.AuthServer != "https://user.fastbuilder.pro" && options.AuthServer != "https://liliya233.uk" {
-		panic("Failed to contact with API")
-	}
+	pterm.Println(pterm.Yellow(fmt.Sprintf("正在使用验证服务器: %s（请确保端口是否正确，如需修改验证服务器地址请附加启动参数--auth-server=<url>)", options.AuthServer)))
+
 	secret_res, err := http.Get(fmt.Sprintf("%s/api/new", options.AuthServer))
 	if err != nil {
 		panic("Failed to contact with API")

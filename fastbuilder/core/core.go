@@ -335,8 +335,6 @@ func EstablishConnectionAndInitEnv(env *environment.PBEnvironment) {
 		env.ClientOptions.RespondUserOverride = args.CustomGameName
 		env.FBAuthClient = fbauth.CreateClient(env.ClientOptions)
 	}
-	pterm.Println(pterm.Yellow(fmt.Sprintf("%s: %s", I18n.T(I18n.ServerCodeTrans), env.LoginInfo.ServerCode)))
-
 	ctx, _ := context.WithTimeout(context.Background(), time.Second*30)
 	authenticator := fbauth.NewAccessWrapper(
 		env.FBAuthClient.(*fbauth.Client),

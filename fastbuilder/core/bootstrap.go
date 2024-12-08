@@ -70,29 +70,11 @@ func Bootstrap() {
 		init_and_run_debug_client()
 		return
 	}
-	if !args.ShouldDisableVersionChecking {
-		check_update()
-	}
-
-	token, username, password := loadTokenOrAskForCredential()
-	runInteractiveClient(token, username, password)
+	runInteractiveClient()
 }
 
-func runInteractiveClient(token, username, password string) {
-	var code, serverPasscode string
-	var err error
-	if !args.SpecifiedServer() {
-		code, serverPasscode, err = utils.GetRentalServerCode()
-	} else {
-		code = args.ServerCode
-		serverPasscode = args.ServerPassword
-	}
-
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	env := ConfigRealEnvironment(token, code, serverPasscode, username, password)
+func runInteractiveClient() {
+	env := ConfigRealEnvironment()
 	EstablishConnectionAndInitEnv(env)
 	go EnterReadlineThread(env, nil)
 	defer DestroyEnvironment(env)
